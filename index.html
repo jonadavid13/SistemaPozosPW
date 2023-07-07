@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Gestión de Mediciones | PDVSA</title>
+    <link rel="shortcut icon" href="/assets/images/pdvsa-icon-red.png" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/styles/index.css">
+</head>
+<body>
+    <header class="header container-fluid">
+        <div class="sub-container d-flex align-items-center">
+            <a href="#"><img class="header-logo m-4" src="/assets/images/pdvsa-logo-tr.png" alt="Logo PDVSA"></a>
+            <span class="header-title fw-semibold ms-3">Sistema de Gestión de Mediciones en Pozos Petroleros</span>
+        </div>
+    </header>
+    <main>
+        <section class="main-section px-5 py-4 row">
+            
+            <article class="registros d-flex flex-column col-9">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="section-title fw-semibold">Registros de Mediciones</span>
+                    <button id="btnNuevoRegistro" 
+                        type="button" class="btn btn-primary px-4 py-2" 
+                        data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        Nuevo registro
+                    </button>
+                </div>
+
+                <table id="tablaRegistros" class="tabla-registros table table-striped table-hover rounded-4">
+                    <thead class="table-header">
+                        <tr class="header-row">
+                            <th scope="col">ID</th>
+                            <th scope="col">Pozo</th>
+                            <th scope="col">Fecha y hora</th>
+                            <th scope="col">Medición</th>
+                            <th scope="col">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row"></th>
+                            <td colspan="4">No hay registros</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>Maracaibo</td>
+                            <td>12-07-2022 15:23:55</td>
+                            <td>123,55 PSI</td>
+                            <td>
+                                <button type="button" class="btnEditarRegistro btn btn-warning">Editar</button>
+                                <button type="button" class="btnEliminarRegistro btn btn-danger">Eliminar</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </article>
+        </section>
+
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title" id="exampleModalLabel">Nuevo registro</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form class="form-registros-medidas" id="RegistrosForm">
+
+                        <div id="alertForm"></div>
+
+                        <div class="mb-4">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <label for="id" class="form-label fw-semibold mb-0">Pozo</label>
+                                <button type="button" class="btn btn-success">Agregar pozo</button>
+                            </div>
+                            <select id="selectPozos" class="form-select" name="pozos" tabindex="-1" required>
+                                <option selected>Seleccione...</option>
+                                <option value="op1">Maracaibo</option>
+                                <option value="op2">Cabimas</option>
+                            </select>
+                        </div>
+                        <div class="mb-4">
+                            <label for="idValor" class="form-label fw-semibold">Valor de la medición (PSI):</label>
+                            <input type="number" class="form-control" id="idValor" name="txtValor"
+                                placeholder="Ingrese el valor" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="idFecha" class="form-label fw-semibold">Fecha y hora: </label>
+                            <input id="idFecha" class="form-control" type="datetime-local" name="marcaTemporal" value="2017-06-01T08:30" />
+                        </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary px-3 py-2" data-bs-dismiss="modal">Cancelar</button>
+                  <button type="button" class="btn btn-primary px-4 py-2">Guardar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+</body>
+</html>

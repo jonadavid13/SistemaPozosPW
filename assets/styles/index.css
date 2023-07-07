@@ -1,0 +1,54 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: "Segoe UI", "Verdana", sans-serif;
+  font-size: 62.5%;
+}
+
+body {
+  font-size: 1.6rem;
+}
+
+.btn {
+  font-size: 1.6rem;
+}
+
+header {
+  font-family: "Segoe UI", "Verdana", sans-serif;
+  background-color: rgb(212, 212, 212);
+}
+header .sub-container .header-logo {
+  height: 4rem;
+}
+header .sub-container .header-title {
+  font-size: 2rem;
+}
+
+main .main-section {
+  background-color: #f5f5fa;
+  height: 80vh;
+}
+main .main-section .section-title {
+  font-size: 2.3rem;
+  padding-bottom: 1rem;
+}
+main .main-section .registros {
+  border-radius: 0.5rem;
+}
+main .main-section .registros .tabla-registros {
+  border-radius: 4rem;
+}
+
+.modal.fade {
+  font-size: 100%;
+}
+.modal.fade .modal-title {
+  font-size: 2rem;
+}
+.modal.fade .form-control, .modal.fade .form-select {
+  font-size: 1.6rem;
+}/*# sourceMappingURL=index.css.map */

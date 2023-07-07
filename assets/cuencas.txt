@@ -1,0 +1,9 @@
+Zonas PDVSA:
+
+Cuenca Zulia-Falcon (ZF)
+Cuenca Barinas-Apure (BA)
+Cuenca Tuy-Cariaco (TC)
+Oriental (Faja petrolífera del Orinoco) (FPO)
+Costa afuera (CA)
+
+-- ------------------------------------------------------- Table `pozospdvsa`.`pozos`-- -----------------------------------------------------CREATE TABLE IF NOT EXISTS `pozospdvsa`.`pozos` (  `id` INT NOT NULL AUTO_INCREMENT,  `nombre` VARCHAR(45) NOT NULL,  `zona` ENUM('ZF', 'BA', 'TC', 'FPO', 'CA') NOT NULL,  PRIMARY KEY (`id`),  UNIQUE INDEX `nombre_UNIQUE` (`nombre` ASC) VISIBLE)ENGINE = InnoDB;
