@@ -229,7 +229,7 @@ function selectRegistros(){
                     <th scope="col">ID</th>
                     <th scope="col">Pozo</th>
                     <th scope="col">Fecha y hora</th>
-                    <th scope="col">Medición</th>
+                    <th scope="col">Medición (PSI)</th>
                     <th scope="col">Acciones</th>
                 </tr>
             </thead>
@@ -239,7 +239,7 @@ function selectRegistros(){
                     <td>${element.id}</td>
                     <td>${element.pozo}</td>
                     <td>${element.fecha}</td>
-                    <td>${element.medicion}</td>
+                    <td class="mediciones-cell">${element.medicion}</td>
                     <td>
                         <button type="button" class="btnEditarRegistro btn btn-warning" onclick="editarRegistro(${element.id})">Editar</button>
                         <button type="button" class="btnEliminarRegistro btn btn-danger" onclick="eliminarRegistro(${element.id})">Eliminar</button>
@@ -269,7 +269,29 @@ function editarRegistro(id){
 }
 
 function eliminarRegistro(id){
-    
+    const data = JSON.stringify({
+        'idRegistro': id
+    })
+
+    $.ajax({
+        type: "POST",
+        url: "assets/php/eliminar.php",
+        dataType: "json",
+        data: data,
+        beforeSend: function () {
+            console.log("Enviando datos para eliminar registro");
+        },
+        success: function (resp) {
+            console.log(resp);
+            window.location.reload();
+        },
+        fail: function (jqXHR, textStatus, errorThown) {
+            console.log(textStatus, errorThown);
+        },
+        error: function (jqXHR, textStatus, errorThown) {
+            console.log(textStatus, errorThown);
+        },
+    });
 }
 
 selectRegistros();
