@@ -12,14 +12,13 @@ $json_array = [];
 
 $data = json_decode(file_get_contents('php://input'), true);
 
-if(isset($data['idPozo']) && isset($data['Fecha']) && isset($data['Valor'])){
+if(isset($data['Nombre']) && isset($data['Zona'])){
 
-    if(!empty($data['idPozo']) && !empty($data['Fecha']) && !empty($data['Valor'])){
-        $pozo = $data['idPozo'];
-        $fecha = $data['Fecha'];
-        $valor = $data['Valor'];
+    if(!empty($data['Nombre']) && !empty($data['Zona'])){
+        $nombrePozo = $data['Nombre'];
+        $zona = $data['Zona'];
 
-        $query = "INSERT INTO mediciones(idPozo,marcaTemporal,medicion) VALUES ('$pozo', '$fecha', '$valor')";
+        $query = "INSERT INTO pozos(nombre, zona) VALUES ('$nombrePozo', '$zona')";
         $rs    = mysqli_query($conn, $query) or die(mysqli_error($conn));
 
         if($rs == true){

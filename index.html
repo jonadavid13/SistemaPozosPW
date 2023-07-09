@@ -4,14 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema de Gestión de Mediciones | PDVSA</title>
-    <link rel="shortcut icon" href="/assets/images/pdvsa-icon-red.png" type="image/x-icon">
+    <link rel="shortcut icon" href="assets/images/pdvsa-icon-red.png" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <link rel="stylesheet" href="assets/styles/index.css">
+    <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+    <script src="assets/js/index.js"></script>
 </head>
 <body>
     <header class="header container-fluid">
         <div class="sub-container d-flex align-items-center">
-            <a href="#"><img class="header-logo m-4" src="/assets/images/pdvsa-logo-tr.png" alt="Logo PDVSA"></a>
+            <a href="#"><img class="header-logo m-4" src="assets/images/pdvsa-logo-tr.png" alt="Logo PDVSA"></a>
             <span class="header-title fw-semibold ms-3">Sistema de Gestión de Mediciones en Pozos Petroleros</span>
         </div>
     </header>
@@ -43,22 +45,12 @@
                             <th scope="row"></th>
                             <td colspan="4">No hay registros</td>
                         </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>Maracaibo</td>
-                            <td>12-07-2022 15:23:55</td>
-                            <td>123,55 PSI</td>
-                            <td>
-                                <button type="button" class="btnEditarRegistro btn btn-warning">Editar</button>
-                                <button type="button" class="btnEliminarRegistro btn btn-danger">Eliminar</button>
-                            </td>
-                        </tr>
                     </tbody>
                 </table>
             </article>
         </section>
 
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="exampleModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
@@ -68,32 +60,62 @@
                 <div class="modal-body">
                     <form class="form-registros-medidas" id="RegistrosForm">
 
+                        <!-- Contenedor de Alertas -->
                         <div id="alertForm"></div>
 
-                        <div class="mb-4">
-                            <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div id="contenedor-pozo" class="mb-4">
+                            <div class="d-flex justify-content-between mb-3">
                                 <label for="id" class="form-label fw-semibold mb-0">Pozo</label>
-                                <button type="button" class="btn btn-success">Agregar pozo</button>
+                                <button id="btnAgregarPozo" type="button" class="btn btn-success" onclick="agregarPozo()">Agregar pozo</button>
                             </div>
-                            <select id="selectPozos" class="form-select" name="pozos" tabindex="-1" required>
-                                <option selected>Seleccione...</option>
-                                <option value="op1">Maracaibo</option>
-                                <option value="op2">Cabimas</option>
+                            <select id="selectPozos" class="form-select" tabindex="-1" required>
+                                <option>Seleccione...</option>
                             </select>
                         </div>
+
+                        <!-- MÓDULO PARA REGISTRAR NUEVO POZO -->
+                        <div id="agregarPozoForm" class="card mb-4 disabled">
+                            <div class="card-header">
+                                <span class="form-label fw-semibold">Agregar pozo</span>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-4">
+                                    <label for="idNombre" class="form-label fw-semibold">Nombre:</label>
+                                    <input type="text" class="form-control" id="idNombre" name="txtNombre" placeholder="Nombre del pozo" required>
+                                </div>
+    
+                                <div class="mb-4">
+                                    <label for="selectZona" class="form-label fw-semibold">Zona:</label>
+                                    <select id="selectZona" name="selectZona" class="form-select" tabindex="-1" required>
+                                        <option>Seleccione...</option>
+                                        <option value="ZF">Cuenca Zulia-Falcón</option>
+                                        <option value="BA">Cuenca Barinas-Apure</option>
+                                        <option value="TC">Cuenca Tuy-Cariaco</option>
+                                        <option value="FPO">Oriental (Faja Petrolífera del Orinoco)</option>
+                                        <option value="CA">Costa afuera</option>
+                                    </select>
+                                </div>
+    
+                                <div class="d-flex justify-content-end">
+                                    <button type="button" class="btn btn-secondary me-2" onclick="cerrarFormPozo()">Cancelar</button>
+                                    <button type="button" class="btn btn-success" onclick="guardarPozo()">Guardar</button>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="mb-4">
                             <label for="idValor" class="form-label fw-semibold">Valor de la medición (PSI):</label>
-                            <input type="number" class="form-control" id="idValor" name="txtValor"
-                                placeholder="Ingrese el valor" required>
+                            <input type="number" class="form-control" id="idValor" name="txtValor" min="0"
+                                placeholder="Ingrese el valor" required onchange="validar()">
                         </div>
                         <div class="mb-4">
                             <label for="idFecha" class="form-label fw-semibold">Fecha y hora: </label>
-                            <input id="idFecha" class="form-control" type="datetime-local" name="marcaTemporal" value="2017-06-01T08:30" />
+                            <input id="idFecha" class="form-control" type="datetime-local" name="marcaTemporal" required/>
                         </div>
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary px-3 py-2" data-bs-dismiss="modal">Cancelar</button>
-                  <button type="button" class="btn btn-primary px-4 py-2">Guardar</button>
+                  <button type="button" class="btn btn-secondary px-3 py-2" data-bs-dismiss="modal" onclick='resetFormRegistros();'>Cancelar</button>
+                  <button id="btnRegistrar" type="button" class="btn btn-primary px-4 py-2" onclick="guardarRegistro()">Guardar</button>
                 </div>
               </div>
             </div>

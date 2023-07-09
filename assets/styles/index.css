@@ -51,4 +51,8 @@ main .main-section .registros .tabla-registros {
 }
 .modal.fade .form-control, .modal.fade .form-select {
   font-size: 1.6rem;
+}
+
+.disabled {
+  display: none;
 }/*# sourceMappingURL=index.css.map */
